@@ -1,9 +1,7 @@
-import {createStore} from 'redux'
-
-////////
+import { createStore, applyMiddleware, compose} from 'redux'
+import { logger, budgetCheck }from '../middleware/middleware.js'
 import rootReducer from '../reducer/root-reducer.js'
-// import the combined reducers export from reducer/index.js and change whats passed in to createStore below
-// maybe add the Redux Dev Tools
-////////
 
-export default () => createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+export default () => createStore(rootReducer, composeEnhancers(applyMiddleware(logger,budgetCheck)));
